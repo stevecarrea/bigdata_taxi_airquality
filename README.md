@@ -1,6 +1,6 @@
-# Analysis of NYC Taxi Data and Air Quality Measurements
+# Using NYC Taxi Data as a Predictor of Urban Air Quality
 
-This project will attempt to use NYC Taxi Data as a predictor of urban air quality. This is a big data analysis that will be performed using Hadoop within an AWS cluster. The final results will be submitted and presented within NYU's Center for Data Science Spring 2015 Big Data class.
+This project will analyze NYC taxi data from the NYC Taxi and Limousine Commision and air quality measurements from the NYC Community Air Survey. This is a big data analysis that will be performed using Hadoop within an AWS cluster. The final results will be submitted and presented within NYU's Center for Data Science Spring 2015 Big Data class.
 
 ### Team Members:
 Steve Carrea, Paul Cho, Bruno Pasini 
