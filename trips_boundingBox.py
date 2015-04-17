@@ -32,3 +32,4 @@ with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') 
 
 print 'Count: ', count
 
+# comment
