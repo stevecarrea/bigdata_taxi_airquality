@@ -4,7 +4,8 @@ import csv
 import operator
 
 count = 0
-with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') as csvfile:
+speeds = []
+with open('/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/trip_data_1.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
     next(reader)
     for row in reader:
@@ -27,11 +28,13 @@ with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') 
 
                 if(dropoff_lon >= -73.997271 and dropoff_lon <= -73.991832 and dropoff_lat >= 40.713466 and dropoff_lat <= 40.715052):
                     speed = ( trip_distance / trip_duration ) * 3600
+                    speeds.append(speed)
                     print 'Date: ', pickup_date, 'Speed: ', round(speed, 2)
                     count += 1
         except:
             pass
 
 print 'Count: ', count
+print 'Average Speed: ', reduce(lambda x, y: x + y, speeds) / len(speeds)
 
 # comment
