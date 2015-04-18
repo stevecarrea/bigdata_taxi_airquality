@@ -3,13 +3,38 @@ import sys
 import csv
 import operator
 import time
-import datetime
+from datetime import datetime
 import math
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
+x = []
+y = []
+x1 = []
+y1 = []
 count = 0
 speeds = {}
-start_time = datetime.datetime.now()
-with open('/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/trip_data_1.csv', 'r') as csvfile:
+start_time = datetime.now()
+measurements = {}
+with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/nysdec_divisionstreet_jan2013.csv', 'r') as csvfile_air:
+    reader = csv.reader(csvfile_air)
+    next(reader)
+    for row in reader:
+        try:
+            monitor_date = datetime.strptime(row[0], '%Y-%m-%d').date() # 2013-01-27
+            monitor_measurement = float(row[2])
+            if measurement_date not in measurements.keys():
+                measurements[measurement_date] = []
+            measurements[measurement_date].append(monitor_measurement)
+        except:
+            pass
+
+    for date in sorted(measurements):
+        x1.append(date)
+        y1.append(math.ceil(reduce(lambda x, y: x + y, measurements[date]) / len(measurements[date]) * 100) / 100)
+
+
+with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
     next(reader)
     for row in reader:
@@ -19,8 +44,8 @@ with open('/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/tri
             pickup_lon = float(row[10])
             pickup_lat = float(row[11])
             # pickup_date = time.strptime(row[5], "%Y-%m-%d %H:%M:%S") # 2013-01-27 11:45:00
-            pickup_date = time.strptime(row[5][:-9], "%Y-%m-%d") # 2013-01-27 11:45:00
-            dropoff_date = time.strptime(row[6][:-9], "%Y-%m-%d")
+            pickup_date = datetime.strptime(row[5][:-9], '%Y-%m-%d').date() # 2013-01-27 11:45:00
+            dropoff_date = datetime.strptime(row[6][:-9], '%Y-%m-%d').date()
             dropoff_lon = float(row[12])
             dropoff_lat = float(row[13])
             trip_distance = float(row[9])
@@ -46,9 +71,22 @@ with open('/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/tri
 
 print 'Count: ', count
 for date in sorted(speeds):
-    print 'Date: ', time.strftime("%Y-%m-%d", date), '| Average Speed: ', math.ceil(reduce(lambda x, y: x + y, speeds[date]) / len(speeds[date]) * 100) / 100, '| Number of Taxis: ', len(speeds[date])
+    x.append(date)
+    y.append(math.ceil(reduce(lambda x, y: x + y, speeds[date]) / len(speeds[date]) * 100) / 100)
 
-c = datetime.datetime.now() - start_time
+    print 'Date: ', date, '| Average Speed: ', math.ceil(reduce(lambda x, y: x + y, speeds[date]) / len(speeds[date]) * 100) / 100, '| Number of Taxis: ', len(speeds[date])
+
+
+c = datetime.now() - start_time
 print 'It took', divmod(c.days * 86400 + c.seconds, 60), '(minutes, seconds).'
+
+plt.plot(x, y)
+plt.plot(x1, y1)
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+plt.gcf().autofmt_xdate()
+plt.title('Average Taxi Speed vs Air Quality Measurements')
+plt.ylabel('Average Taxi Speed')
+plt.grid()
+plt.show()
 
 # comment
