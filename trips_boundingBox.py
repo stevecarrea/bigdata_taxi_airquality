@@ -1,8 +1,4 @@
-import datetime
-import sys
 import csv
-import operator
-import time
 from datetime import datetime
 import math
 import matplotlib.pyplot as plt
@@ -10,8 +6,8 @@ import matplotlib.dates as mdates
 
 x = []
 y = []
-x1 = []
-y1 = []
+x_air = []
+y_air = []
 count = 0
 speeds = {}
 start_time = datetime.now()
@@ -21,7 +17,7 @@ with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/nysdec_divisionstreet_j
     next(reader)
     for row in reader:
         try:
-            monitor_date = datetime.strptime(row[0], '%Y-%m-%d').date() # 2013-01-27
+            measurement_date = datetime.strptime(row[0], '%Y-%m-%d').date() # 2013-01-27
             monitor_measurement = float(row[2])
             if measurement_date not in measurements.keys():
                 measurements[measurement_date] = []
@@ -30,8 +26,8 @@ with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/nysdec_divisionstreet_j
             pass
 
     for date in sorted(measurements):
-        x1.append(date)
-        y1.append(math.ceil(reduce(lambda x, y: x + y, measurements[date]) / len(measurements[date]) * 100) / 100)
+        x_air.append(date)
+        y_air.append(math.ceil(reduce(lambda x, y: x + y, measurements[date]) / len(measurements[date]) * 100) / 100)
 
 
 with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') as csvfile:
@@ -56,7 +52,9 @@ with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') 
             #     count += 1
 
             # Division Street bounding box
-            if(pickup_lon >= -73.997271 and pickup_lon <= -73.991832 and pickup_lat >= 40.713466 and pickup_lat <= 40.715052):
+            # Southwest coordinate: 40.713221, -73.998166
+            # Northeast coordinate: 40.715319, -73.993370
+            if(pickup_lon >= -73.998166 and pickup_lon <= -73.993370 and pickup_lat >= 40.713221 and pickup_lat <= 40.715319):
                 if(dropoff_lon >= -73.997271 and dropoff_lon <= -73.991832 and dropoff_lat >= 40.713466 and dropoff_lat <= 40.715052):
                     speed = ( trip_distance / trip_duration ) * 3600
                     if speed > 0 and speed < 100:
@@ -80,8 +78,10 @@ for date in sorted(speeds):
 c = datetime.now() - start_time
 print 'It took', divmod(c.days * 86400 + c.seconds, 60), '(minutes, seconds).'
 
-plt.plot(x, y)
-plt.plot(x1, y1)
+fig = plt.figure(figsize=(8, 6))
+
+plt.plot(x, y, 'bo-', color='r', label='Avg Speed')
+plt.plot(x_air, y_air, 'bo-', color='b', label='PM2.5')
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 plt.gcf().autofmt_xdate()
 plt.title('Average Taxi Speed vs Air Quality Measurements')
