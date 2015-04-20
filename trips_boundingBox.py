@@ -59,9 +59,9 @@ with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') 
             # Northwest coordinate: 40.743795, -73.812404
             if(pickup_lon >= -73.837724 and pickup_lon <= -73.812404 and pickup_lat >= 40.726365 and pickup_lat <= 40.743795) or \
                 (dropoff_lon >= -73.837724 and dropoff_lon <= -73.812404 and dropoff_lat >= 40.726365 and dropoff_lat <= 40.743795):
-                    if trip_distance < 2.0:
+                    if trip_distance < 1.5:
                         speed = ( trip_distance / trip_duration ) * 3600
-                        if speed > 0 and speed < 100:
+                        if speed > 0 and speed < 50:
 
                             x.append(pickup_date)
                             y.append(speed)
@@ -75,15 +75,20 @@ print 'Count: ', count
 c = datetime.now() - start_time
 print 'It took', divmod(c.days * 86400 + c.seconds, 60), '(minutes, seconds).'
 
-fig = plt.figure(figsize=(8, 6))
-
+fig = plt.figure()
+ax1 = fig.add_subplot(211)
 plt.plot(x, y, 'bo-', color='r', label='Avg Speed')
-plt.plot(x_air, y_air, 'bo-', color='b', label='PM2.5')
-plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-plt.gcf().autofmt_xdate()
 plt.title('Average Taxi Speed vs Air Quality Measurements')
+plt.gca().set_ylim([0, 50])
 plt.ylabel('Average Taxi Speed')
-plt.grid()
-plt.show()
 
-# comment
+ax2 = fig.add_subplot(212, sharex=ax1)
+plt.plot(x_air, y_air, 'bo-', color='b', label='NOx')
+
+plt.setp(ax1.get_xticklabels(), visible=False)
+
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b-%Y'))
+plt.gcf().autofmt_xdate()
+plt.gca().set_ylim([0, 250])
+plt.ylabel('NOx')
+plt.show()
