@@ -12,7 +12,7 @@ count = 0
 speeds = {}
 start_time = datetime.now()
 measurements = {}
-with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/nysdec_queenscollege_jan2013_NOx.csv', 'r') as csvfile_air:
+with open('/Users/Steve/Github/bigdata_taxi_airquality/data/nysdec_queenscollege_2013.01_NOx.csv', 'r') as csvfile_air:
     reader = csv.reader(csvfile_air)
     next(reader)
     for row in reader:
@@ -30,7 +30,7 @@ with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/nysdec_queenscollege_ja
         x_air.append(date)
         y_air.append(measurements[date])
 
-with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') as csvfile:
+with open('/Users/Steve/Github/bigdata_taxi_airquality/data/trip_data_1.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
     next(reader)
     for row in reader:
@@ -81,7 +81,8 @@ plt.plot(x, y, 'bo-', color='r', label='Avg Speed')
 plt.title('Average Taxi Speed vs Air Quality Measurements')
 plt.gca().set_ylim([0, 50])
 plt.ylabel('Average Taxi Speed')
-plt.grid()
+ax1.grid(b=True, which='major')
+ax1.grid(b=True, which='minor')
 
 ax2 = fig.add_subplot(212, sharex=ax1)
 plt.plot(x_air, y_air, 'bo-', color='b', label='NOx')
@@ -92,5 +93,8 @@ plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b-%Y'))
 plt.gcf().autofmt_xdate()
 plt.gca().set_ylim([0, 250])
 plt.ylabel('NOx')
-plt.grid()
+ax2.grid(b=True, which='major')
+ax2.grid(b=True, which='minor')
+
+
 plt.show()
