@@ -10,7 +10,7 @@ x_air = []
 y_air = []
 start_time = datetime.now()
 measurements = {}
-with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/nysdec_queenscollege_jan2013_NOx.csv', 'r') as csvfile_air:
+with open('/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/nysdec_queenscollege_jan2013_NOx.csv', 'r') as csvfile_air:
     reader = csv.reader(csvfile_air)
     next(reader)
     for row in reader:
@@ -31,10 +31,10 @@ with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/nysdec_queenscollege_ja
         y_air.append(measurement)
         print 'Date: ', date, ' | Average Measurement: ', round(measurement, 2), '| Number of Measurements: ', len(measurements[date])
 
-with open('/Users/Steve/GDrive/NYU_CUSP/Big_Data/project/trip_data_1.csv', 'r') as csvfile:
-    boxes = [{ \
-        "lat" : [40.726365, 40.743795], "lon" : [-73.837724,-73.812404] \
-            }]
+with open('/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/trip_data_1.csv', 'r') as csvfile:
+    boxes = [ \
+        { "lat" : [40.726365, 40.743795], "lon" : [-73.837724,-73.812404] } \
+            ]
     boxes_speeds = []
     for box in boxes:
 
