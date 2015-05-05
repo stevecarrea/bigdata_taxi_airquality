@@ -4,5 +4,11 @@ trips_boundingBox_backup.py
 
 taxi_job.txt
 
-*.csv
+*.xls
 
+*.pdf
+
+historical_weather.py
+
+data/*
+test.py
