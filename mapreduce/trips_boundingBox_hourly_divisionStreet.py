@@ -3,7 +3,6 @@ from datetime import datetime
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy import stats
 
 x = []
 y_date = []
@@ -13,6 +12,12 @@ count = 0
 speeds = {}
 start_time = datetime.now()
 measurements = {}
+
+air_file = '/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/nysdec_divisionstreet_2013.01_PM25.csv'
+taxi_file = '/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/trip_data_1.csv'
+
+# air_file = '/Users/Steve/Github/bigdata_taxi_airquality/data/nysdec_divisionstreet_2013.01_PM25.csv'
+# taxi_file = '/Users/Steve/Github/bigdata_taxi_airquality/data/trip_data_1.csv'
 
 with open('/Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/nysdec_queenscollege_jan2013_NOx.csv', 'r') as csvfile_air:
     reader = csv.reader(csvfile_air)

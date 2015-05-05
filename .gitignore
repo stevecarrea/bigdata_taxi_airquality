@@ -12,3 +12,6 @@ historical_weather.py
 
 data/*
 test.py
+
+mapreduce/input/*
+mapreduce/input_test/*
