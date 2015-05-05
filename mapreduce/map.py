@@ -16,15 +16,15 @@ def import_air(line):
     locations = { "134" : "DivisionStreet" }
     pollutants = { "88502" : "PM25 Acceptable", "44201" : "Ozone", "42101" : "CO", "88501" : "PM25 Raw" }
 
-    # try:
-    date_time = line[10]+' '+line[11][:-3]
-    location = locations[line[6]]
-    pollutant = pollutants[line[7]]
-    measurement_date = datetime.strptime(date_time, '%Y-%m-%d %H')  # 2013-01-27 11:45:00
-    monitor_measurement = float(line[16])  # DivisionStreet, PM2.5
-    print '%s\t%s\t%s\t%s' % (location, measurement_date, pollutant, monitor_measurement)
-    # except KeyError:
-    #     pass
+    try:
+        date_time = line[10]+' '+line[11][:-3]
+        location = locations[line[6]]
+        pollutant = pollutants[line[7]]
+        measurement_date = datetime.strptime(date_time, '%Y-%m-%d %H')  # 2013-01-27 11:45:00
+        monitor_measurement = float(line[16])  # DivisionStreet, PM2.5
+        print '%s\t%s\t%s\t%s' % (location, measurement_date, pollutant, monitor_measurement)
+    except KeyError:
+        pass
 
 def import_trips(line):
     # import trips data that fall within a bounding boxes and pass along the date_hour and speed
@@ -51,27 +51,16 @@ def import_trips(line):
     except:
         pass
 
-def clean_quotes(line):
-    csv_reader = csv.reader(line)
-    values = []
-    for value in csv_reader:
-        try:
-            values.append(value[0])
-        except:
-            values.append('')
-    return values
-
 def run_mapper():
     # chose which function to run based on the file read by mapper
-    cnt = 0
+    # cnt = 0
     for line in sys.stdin:
         line = line.strip().split(',')
         if len(line) == 25:
-            line = clean_quotes(line)
             import_air(line)
-            cnt +=1
-        if cnt == 100:
-            break
+            # cnt +=1
+        # if cnt == 1000:
+        #     break
         # else:
         #     import_trips(line)
 
