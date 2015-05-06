@@ -15,3 +15,4 @@ test.py
 
 mapreduce/input/*
 mapreduce/input_test/*
+mapreduce/output/*

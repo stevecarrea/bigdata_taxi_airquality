@@ -5,14 +5,13 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
-def avg_speed(speeds):
+def average_speed(speeds):
     return math.ceil(reduce(lambda x, y: x + y, speeds) / len(speeds) * 100) / 100
 
 def daily_stats(hourly_data):
     # produce key-value pairs for each hour
     # with slope and rsquared
-
-
+    { "avg_speed" : avg_speed, "PM25 Acceptable": 0, "Ozone" : 0, "CO" : 0, "PM25 Raw" : 0 }
 
 def run_reducer():
     # output from mapper.
@@ -32,43 +31,63 @@ def run_reducer():
     last_tag = None
     last_day = None
     daily_data = {}
-
+    speeds = []
+    speed_first = False
 
     measurements = {}
     for line in sys.stdin:
         
-        line = line.strip()  # remove leading and trailing whitespace
-        row = line.split("\t", 1)
+        # line = line  # remove leading and trailing whitespace
+        row = line.strip().split("\t")
 
         location = row[0]
         hour = row[1]
         day = hour[:-9]
 
+        # print row
+
         if len(row) == 3:  # (location, hour, measure)
-            speed = row[3]  # speed in mph, calculated in mapper
-            tag = "speed"
-        else:  # (location, hour, pollutant name, measure)
+            try:
+                speed = float(row[2])  # speed in mph, calculated in mapper
+                tag = "speed"
+            except TypeError:
+                continue
+            # print 3
+        elif len(row) == 4:  # (location, hour, pollutant name, measure)
             pollutant = row[2] # name of pollutant
             measure = row[3]
             tag = "pollutant"
+            # print 3
+        else:
+            # print "else"
+            continue
+
+        if hour != last_hour and speed_first:
+            print "%s,%s,%s,%s,%s,%s,%s" % (last_location, last_hour, hourly_data[last_hour]["avg_speed"], hourly_data[last_hour]["PM25 Acceptable"], hourly_data[last_hour]["Ozone"], hourly_data[last_hour]["CO"], hourly_data[last_hour]["PM25 Raw"])
 
         if day != last_day:
             if last_day:
-                # do logic of last_day here (generate graph)
-                daily_stats(hourly_data)
+                # do logic of last_day here, when we looped over the day (generate graph)
+                pass
             hourly_data = {}
+            speed_first = False
 
         if tag == "speed":
+            speed_first = True
             if hour != last_hour:
                 speeds = []  # empty the array after each hour
             speeds.append(speed)
 
-        if tag != last_tag:
-            avg_speed = avg_speed(speeds)  # calculate average speed for each hour
-            hourly_data[hour] = { "avg_speed" : avg_speed, "PM25 Acceptable": 0, "Ozone" : 0, "CO" : 0, "PM25 Raw" : 0 }
+        if tag != last_tag and speed_first:
+            avg_speed = average_speed(speeds)  # calculate average speed for each hour
+            hourly_data[hour] = { "avg_speed" : avg_speed, "PM25 Acceptable": "", "Ozone" : "", "CO" : "", "PM25 Raw" : "" }
 
-        if tag == "pollutant":
-            hourly_data[hour][pollutant] = measure
+        if tag == "pollutant" and speed_first:
+            try:
+                hourly_data[hour][pollutant] = measure
+            except KeyError:
+                hourly_data[hour] = { "avg_speed" : "", "PM25 Acceptable": "", "Ozone" : "", "CO" : "", "PM25 Raw" : "" }                
+
 
         last_hour = hour
         last_location = location

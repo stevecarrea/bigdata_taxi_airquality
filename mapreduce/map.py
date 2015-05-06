@@ -38,7 +38,12 @@ def import_trips(line):
         trip_distance = float(line[9])
         trip_duration = float(line[8])  # seconds
 
-        boxes = [ { "lat" : [40.713221, 40.715319], "lon" : [-73.998166,-73.993370], "location" : "DivisionStreet" } ]
+        boxes = \
+            [ \
+                { "lat" : [40.713221, 40.715319], "lon" : [-73.998166,-73.993370], "location" : "DivisionStreet" }, \
+                { "lat" : [40.813844, 40.821606], "lon" : [-73.968777,-73.938522], "location" : "CCNY" }, \
+                { "lat" : [40.728960, 40.729627], "lon" : [-73.992799,-73.977178], "location" : "PS19" } \
+            ] \
         
         for box in boxes:
             if(pickup_lon >= box["lon"][0] and pickup_lon <= box["lon"][1] and pickup_lat >= box["lat"][0] and pickup_lat <= box["lat"][1]) or \
@@ -53,7 +58,10 @@ def import_trips(line):
 
 def import_weather(line):  # NEED TO SKIP HEADER ROW
     # import weather from central park weather station
-    date_time = line[1]+' '+line[2]  # NEED TO PARSE CORRECTLY
+    date_time = line[1]+' '+line[2] # NEED TO PARSE CORRECTLY
+
+    date = str(datetime.strptime(date_time, "%Y%m%d %H%M"))
+
     sky_condition = str(line[4])
     rel_humidity = int(line[22])
     wind_speed = line[24]
