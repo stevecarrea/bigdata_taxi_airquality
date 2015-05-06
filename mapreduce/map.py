@@ -13,7 +13,7 @@ file_name = os.path.split(file_path)[-1][:-4]
 def import_air(line):
     # import air quality data for each hour
 
-    locations = { "134" : "DivisionStreet" }
+    locations = { "134" : "DivisionStreet", "135" : "CCNY", "128" : "PS19" }
     pollutants = { "88502" : "PM25 Acceptable", "44201" : "Ozone", "42101" : "CO", "88501" : "PM25 Raw" }
 
     try:
@@ -51,6 +51,15 @@ def import_trips(line):
     except:
         pass
 
+def import_weather(line):  # NEED TO SKIP HEADER ROW
+    # import weather from central park weather station
+    date_time = line[1]+' '+line[2]  # NEED TO PARSE CORRECTLY
+    sky_condition = str(line[4])
+    rel_humidity = int(line[22])
+    wind_speed = line[24]
+    wind_direction = line[26]
+
+
 def run_mapper():
     # chose which function to run based on the file read by mapper
     # cnt = 0
@@ -61,8 +70,10 @@ def run_mapper():
             # cnt +=1
         # if cnt == 1000:
         #     break
-        # else:
-        #     import_trips(line)
+        elif len(line) == 44:
+            import_weather(line)
+        else:
+            import_trips(line)
 
 run_mapper()
 
