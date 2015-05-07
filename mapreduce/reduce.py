@@ -24,6 +24,8 @@ def run_reducer():
     # DivisionStreet  2013-01-03 01:00:00 PM25 Acceptable 5.6
     # DivisionStreet  2013-01-03 01:00:00 PM25 Raw    2.9
 
+    print "location, time, number_of_taxis, avg_speed, pm25_acceptable, ozone, co, pm25_raw"
+
     last_location = None
     last_hour = None
     last_tag = None
@@ -60,7 +62,7 @@ def run_reducer():
 
         if hour != last_hour and speed_first:
             try:
-                print "%s,%s,%s,%s,%s,%s,%s" % (last_location, last_hour, hourly_data[last_hour]["avg_speed"], hourly_data[last_hour]["PM25 Acceptable"], hourly_data[last_hour]["Ozone"], hourly_data[last_hour]["CO"], hourly_data[last_hour]["PM25 Raw"])
+                print "%s,%s,%s,%s,%s,%s,%s" % (last_location, last_hour, hourly_data[last_hour]["taxis_count"], hourly_data[last_hour]["avg_speed"], hourly_data[last_hour]["PM25 Acceptable"], hourly_data[last_hour]["Ozone"], hourly_data[last_hour]["CO"], hourly_data[last_hour]["PM25 Raw"])
             # print hourly_data
             except KeyError:
                 pass
@@ -78,21 +80,16 @@ def run_reducer():
                 speeds = []  # empty the array after each hour
             speeds.append(speed)
 
-        # print tag
-        # print last_tag
-        # print tag != last_tag
-        # print speed_first
-        # print hour
-
         if tag != last_tag and speed_first:
+            taxis_count = len(speeds)
             avg_speed = average_speed(speeds)  # calculate average speed for each hour
-            hourly_data[hour] = { "avg_speed" : avg_speed, "PM25 Acceptable": "", "Ozone" : "", "CO" : "", "PM25 Raw" : "" }
+            hourly_data[hour] = { "taxis_count" : taxis_count, "avg_speed" : avg_speed, "PM25 Acceptable": "", "Ozone" : "", "CO" : "", "PM25 Raw" : "" }
 
         if tag == "pollutant" and speed_first:
             try:
                 hourly_data[hour][pollutant] = measure
             except KeyError:
-                hourly_data[hour] = { "avg_speed" : "", "PM25 Acceptable": "", "Ozone" : "", "CO" : "", "PM25 Raw" : "" }                
+                hourly_data[hour] = { "taxis_count" : "", "avg_speed" : "", "PM25 Acceptable": "", "Ozone" : "", "CO" : "", "PM25 Raw" : "" }                
 
 
         last_hour = hour
