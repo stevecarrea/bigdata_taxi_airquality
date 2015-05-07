@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import sys
 import csv
 from datetime import datetime
@@ -44,8 +45,6 @@ def run_reducer():
         hour = row[1]
         day = hour[:-9]
 
-        # print row
-
         if len(row) == 3:  # (location, hour, measure)
             try:
                 speed = float(row[2])  # speed in mph, calculated in mapper
@@ -64,6 +63,8 @@ def run_reducer():
 
         if hour != last_hour and speed_first:
             print "%s,%s,%s,%s,%s,%s,%s" % (last_location, last_hour, hourly_data[last_hour]["avg_speed"], hourly_data[last_hour]["PM25 Acceptable"], hourly_data[last_hour]["Ozone"], hourly_data[last_hour]["CO"], hourly_data[last_hour]["PM25 Raw"])
+            # print hourly_data
+            pass
 
         if day != last_day:
             if last_day:
@@ -77,6 +78,12 @@ def run_reducer():
             if hour != last_hour:
                 speeds = []  # empty the array after each hour
             speeds.append(speed)
+
+        # print tag
+        # print last_tag
+        # print tag != last_tag
+        # print speed_first
+        # print hour
 
         if tag != last_tag and speed_first:
             avg_speed = average_speed(speeds)  # calculate average speed for each hour
@@ -94,5 +101,5 @@ def run_reducer():
         last_tag = tag
         last_day = day
 
-
-run_reducer()
+if __name__ == '__main__':
+    run_reducer()

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import sys
 import os
 import csv
@@ -7,8 +8,8 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
-file_path = os.environ.get('mapreduce_map_input_file', 'stdin')
-file_name = os.path.split(file_path)[-1][:-4]
+# file_path = os.environ.get('mapreduce_map_input_file', 'stdin')
+# file_name = os.path.split(file_path)[-1][:-4]
 
 def import_air(line):
     # import air quality data for each hour
@@ -58,7 +59,7 @@ def import_trips(line):
 
 def import_weather(line):  # NEED TO SKIP HEADER ROW
     # import weather from central park weather station
-    date_time = line[1]+' '+line[2] # NEED TO PARSE CORRECTLY
+    date_time = line[1]+' '+line[2] 
 
     date = str(datetime.strptime(date_time, "%Y%m%d %H%M"))
 
@@ -83,5 +84,6 @@ def run_mapper():
         else:
             import_trips(line)
 
-run_mapper()
+if __name__ == '__main__':
+    run_mapper()
 
