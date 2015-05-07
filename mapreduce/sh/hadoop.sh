@@ -10,5 +10,5 @@ hadoop jar /usr/local/Cellar/hadoop/2.6.0/libexec/share/hadoop/tools/lib/hadoop-
 -mapper map.py \
 -file reduce.py \
 -reducer reduce.py \
--input file:///Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/bigdata_taxi_airquality/mapreduce/input_test \
+-input file:///Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/bigdata_taxi_airquality/mapreduce/input \
 -output file:///Users/brunomacedo/Desktop/NYU-Poly/3rd-Semester/Big-Data/project/bigdata_taxi_airquality/mapreduce/output/HadoopOutput

@@ -19,9 +19,6 @@ def run_reducer():
     # (location, hour, speed)
     # (location, hour, pollutant name, measurement)
 
-    # DivisionStreet  2013-01-03 01:00:00 12.6
-    # DivisionStreet  2013-01-03 01:00:00 12.93
-    # DivisionStreet  2013-01-03 01:00:00 8.5
     # DivisionStreet  2013-01-03 01:00:00 9.23
     # DivisionStreet  2013-01-03 01:00:00 9.42
     # DivisionStreet  2013-01-03 01:00:00 PM25 Acceptable 5.6
@@ -62,9 +59,11 @@ def run_reducer():
             continue
 
         if hour != last_hour and speed_first:
-            print "%s,%s,%s,%s,%s,%s,%s" % (last_location, last_hour, hourly_data[last_hour]["avg_speed"], hourly_data[last_hour]["PM25 Acceptable"], hourly_data[last_hour]["Ozone"], hourly_data[last_hour]["CO"], hourly_data[last_hour]["PM25 Raw"])
+            try:
+                print "%s,%s,%s,%s,%s,%s,%s" % (last_location, last_hour, hourly_data[last_hour]["avg_speed"], hourly_data[last_hour]["PM25 Acceptable"], hourly_data[last_hour]["Ozone"], hourly_data[last_hour]["CO"], hourly_data[last_hour]["PM25 Raw"])
             # print hourly_data
-            pass
+            except KeyError:
+                pass
 
         if day != last_day:
             if last_day:
