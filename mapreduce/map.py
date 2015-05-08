@@ -66,7 +66,7 @@ def import_weather(line):  # NEED TO SKIP HEADER ROW
     rel_humidity = int(line[22])
     wind_speed = line[24]
     wind_direction = line[26]
-    print '%s\t%s\t%s\t%s\t%s\t%s' % ("0weather", date, sky_condition, rel_humidity, wind_speed, wind_direction)
+    print '%s\t%s\t%s\t%s\t%s' % (date, sky_condition, rel_humidity, wind_speed, wind_direction)
     # except:
     #     pass
 
