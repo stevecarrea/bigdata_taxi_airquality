@@ -25,13 +25,23 @@ def plot_avgSpeed():
 def daily_stats(df):  
 
     df_CCNY = df[(df.Location == 'CCNY')]  # Subset dataframe for specific monitor location
-    df_PM19 = df[(df.Location == 'PM19')]
-    df_DivisionStreet = df[(df.Location == 'DivisionStreet')]
+    for pollutant in air_monitors['CCNY']:
+        for i in xrange(0, len(air_monitors['CCNY'])):     
+            df.groupby(df['Time'].dt.day).plot(x='Average_Speed', y=air_monitors['CCNY'][i], style = 'o', title='CCNY'+": "+air_monitors['CCNY'][i]+" "+str(i))
+            plt.savefig('plots/plot'+str('CCNY_')+str(air_monitors['CCNY'][i])+'_'+str(i)+'.png') 
 
-    for monitor in air_monitors.keys():
-        for i in xrange(0, len(air_monitors[monitor])):     
-            df.groupby(df['Time'].dt.day).plot(x='Average_Speed', y=air_monitors[monitor][i], style = 'o', title=monitor+": "+air_monitors[monitor][i])
-            plt.savefig('plots/plot'+str(monitor)+str(air_monitors[monitor][i])+'_'+str(i)+'.png') 
+    df_PS19 = df[(df.Location == 'PS19')]
+    for pollutant in air_monitors['PS19']:
+        for i in xrange(0, len(air_monitors['PS19'])):     
+            df.groupby(df['Time'].dt.day).plot(x='Average_Speed', y=air_monitors['PS19'][i], style = 'o', title='PS19'+": "+air_monitors['PS19'][i]+" "+str(i))
+            plt.savefig('plots/plot'+str('PS19_')+str(air_monitors['PS19'][i])+'_'+str(i)+'.png') 
+
+    df_DivisionStreet = df[(df.Location == 'DivisionStreet')]
+    for pollutant in air_monitors['DivisionStreet']:
+        for i in xrange(0, len(air_monitors['DivisionStreet'])):     
+            df.groupby(df['Time'].dt.day).plot(x='Average_Speed', y=air_monitors['DivisionStreet'][i], style = 'o', title='DivisionStreet'+": "+air_monitors['DivisionStreet'][i]+" "+str(i))
+            plt.savefig('plots/plot'+str('DivisionStreet_')+str(air_monitors['DivisionStreet'][i])+'_'+str(i)+'.png') 
+
 
 # Plot number of taxis per hour for each monitor for entire time period to see density over time
 def plot_density(x):

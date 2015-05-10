@@ -10,3 +10,9 @@ mapreduce/input/*
 mapreduce/input_test/*
 mapreduce/input_big/*
 mapreduce/output/*
+
+__init__.py
+
+part-00000
+
+test.pyc
