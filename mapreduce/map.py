@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import sys
 import os
 import csv
@@ -59,16 +59,16 @@ def import_trips(line):
 
 def import_weather(line):  # NEED TO SKIP HEADER ROW
     # import weather from central park weather station
-    # try:
-    date_time = line[1]+' '+line[2][:-2]
-    date = str(datetime.strptime(date_time, "%Y%m%d %H"))
-    sky_condition = str(line[4])
-    rel_humidity = int(line[22])
-    wind_speed = line[24]
-    wind_direction = line[26]
-    print '%s\t%s\t%s\t%s\t%s' % (date, sky_condition, rel_humidity, wind_speed, wind_direction)
-    # except:
-    #     pass
+    try:
+        date_time = line[1]+' '+line[2][:-2]
+        date = str(datetime.strptime(date_time, "%Y%m%d %H"))
+        sky_condition = str(line[4])
+        rel_humidity = int(line[22])
+        wind_speed = line[24]
+        wind_direction = line[26]
+        print '%s\t%s\t%s\t%s\t%s' % (date, sky_condition, rel_humidity, wind_speed, wind_direction)
+    except ValueError:
+        pass
 
 
 def run_mapper():

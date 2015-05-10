@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import sys
 import csv
 from datetime import datetime
@@ -17,7 +17,7 @@ def average_speed(speeds):
     return math.ceil(reduce(lambda x, y: x + y, speeds) / len(speeds) * 100) / 100
 
 def run_reducer():
-    print "Location, Time, Number Of Taxis, Average Speed, PM25 Acceptable, Ozone, CO, PM25 Raw, Sky Condition, Relative Humidity, Wind Speed, Wind Direction"
+    print "Location,Time,Number_Taxis,Average_Speed,PM25_Acceptable,Ozone,CO,PM25_Raw,Sky_Condition,Relative_Humidity,Wind_Speed,Wind_Direction"
 
     last_location = None
     last_hour = None
@@ -29,8 +29,7 @@ def run_reducer():
     speed_first = False
 
     for line in sys.stdin:
-        
-        # line = line  # remove leading and trailing whitespace
+
         row = line.strip().split("\t")
 
         if len(row) == 3:  # (location, hour, measure)
@@ -51,7 +50,7 @@ def run_reducer():
             hour = row[0]
             sky_condition = row[1]
             relative_humidity = row[2]
-            wind_speed = row[3]
+            wind_speed = row[3].strip()
             wind_direction = row[4]
             tag = "weather"
         else:
@@ -65,7 +64,6 @@ def run_reducer():
             if hour != last_hour and speed_first:
                 try:
                     print "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (last_location, last_hour, air_hourly[last_hour]["taxis_count"], air_hourly[last_hour]["avg_speed"], air_hourly[last_hour]["PM25 Acceptable"], air_hourly[last_hour]["Ozone"], air_hourly[last_hour]["CO"], air_hourly[last_hour]["PM25 Raw"], weather_hourly[last_hour]["sky_condition"], weather_hourly[last_hour]["relative_humidity"], weather_hourly[last_hour]["wind_speed"], weather_hourly[last_hour]["wind_direction"])
-                # print air_hourly
                 except KeyError:
                     print "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (last_location, last_hour, "", "", "", "", "", "", "", "", "", "")
 
