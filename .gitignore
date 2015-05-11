@@ -16,3 +16,7 @@ __init__.py
 part-00000
 
 test.pyc
+
+*.png
+
+*.png

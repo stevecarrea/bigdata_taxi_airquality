@@ -32,14 +32,17 @@ def daily_stats(df):
     for i, group in df_ccny.groupby(df_ccny['Time'].dt.date):
         monitor = 'CCNY'
         pollutant = 'PM25_Acceptable'
-
-        group.plot(x='Average_Speed', y=pollutant, style = 'o', title=monitor+": "+pollutant+" "+str(i))
-        #plt.savefig('plots/plot'+str(monitor)+str(pollutant)+'_'+str(i)+'.png') 
         
-        # fit with scipy
+        # get slope, intercept, and r-value
         slope, intercept, r, p, stderr = linregress(group['Average_Speed'], group[pollutant])
         print i, slope, r
         output.append((i, slope, r))
+        # plot and draw best fit line
+        group.plot(x='Average_Speed', y=pollutant, style = 'o', title=monitor+": "+pollutant+" "+str(i))
+        N=2
+        points = np.linspace(group['Average_Speed'].min(), group[pollutant].max(), N)
+        #plt.plot(points, slope*points + intercept)
+        #plt.savefig('plots/plot'+str(monitor)+str(pollutant)+'_'+str(i)+'.png') 
 
     with open('output_final.csv', "wb") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
