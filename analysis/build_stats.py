@@ -65,7 +65,7 @@ def daily_stats(df):
         except:
             pass
 
-    with open('ccny_output_final_co.csv', "wb") as csv_file:
+    with open('ps19_output_final_pm25.csv', "wb") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(["Date", "Slope", "R-Value", "Wind Speed", "Relative Humidity"])
             for line in output:

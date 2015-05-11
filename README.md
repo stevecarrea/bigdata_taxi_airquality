@@ -7,3 +7,21 @@ Steve Carrea, Paul Cho, Bruno Pasini
 
 ### Project Description:
 The team will understand taxi usage, specifically density and average speed of taxis in each neighborhood, and attempt to correlate with air quality measurements as obtained from the NYC Community Air Survey. This data is made public at the neighborhood level as two-year annual averages. If the team can obtain more refined air quality measurements, we may investigate for specific streets or at smaller time scales. The team may also take into account truck traffic, which has a high impact on air quality. This data can be obtained from the NYS Department of Transportation. The hypothesis is that lower taxi speeds can be indicative of traffic or automobile congestion, and so taxis may be used as sensors to predict higher air pollution concentrations at the neighborhood or street level. 
+
+### Directory Structure:
+bounding_box_images:
+
+Plots generated to help find the optimal size of the bounding boxes used.
+
+mapreduce:
+
+MapReduce scripts, along with its output.
+
+analysis:
+
+Scripts written to analyse the outputs of MapReduce.
+
+output:
+
+CSV files generated after out analisys.
+
