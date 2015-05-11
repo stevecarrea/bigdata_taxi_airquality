@@ -37,14 +37,14 @@ def clean_averages(x):
 output = []
 def daily_stats(df):  
     # CCNY 
-    df_ccny = df[df['Location'] == 'PS19']
+    df_ccny = df[df['Location'] == 'CCNY']
 
     # df_ccny = df
 
     for i, group in df_ccny.groupby(df_ccny['Time'].dt.date):
         try:
-            monitor = 'PS19'
-            pollutant = 'PM25_Acceptable'
+            monitor = 'CCNY'
+            pollutant = 'Ozone'
             
             wind_speed = np.mean(group['Wind_Speed'].apply(lambda x: clean_averages(x)).values)
             relative_humidity = np.mean(group['Relative_Humidity'])
