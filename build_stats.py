@@ -44,8 +44,55 @@ def daily_stats(df):
         #plt.plot(points, slope*points + intercept)
         #plt.savefig('plots/plot'+str(monitor)+str(pollutant)+'_'+str(i)+'.png') 
 
-    with open('output_final.csv', "wb") as csv_file:
+    with open('ccny_output_final.csv', "wb") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
+            writer.writerow(["Date", "Slope", "R-Value"])
+            for line in output:
+                writer.writerow(line)
+
+    # PS19 
+    df_ps19 = df[df['Location'] == 'PS19']
+    for i, group in df_ps19.groupby(df_ps19['Time'].dt.date):
+        monitor = 'PS19'
+        pollutant = 'PM25_Acceptable'
+        
+        # get slope, intercept, and r-value
+        slope, intercept, r, p, stderr = linregress(group['Average_Speed'], group[pollutant])
+        print i, slope, r
+        output.append((i, slope, r))
+        # plot and draw best fit line
+        group.plot(x='Average_Speed', y=pollutant, style = 'o', title=monitor+": "+pollutant+" "+str(i))
+        N=2
+        points = np.linspace(group['Average_Speed'].min(), group[pollutant].max(), N)
+        #plt.plot(points, slope*points + intercept)
+        #plt.savefig('plots/plot'+str(monitor)+str(pollutant)+'_'+str(i)+'.png') 
+
+    with open('ps19_output_final.csv', "wb") as csv_file:
+            writer = csv.writer(csv_file, delimiter=',')
+            writer.writerow(["Date", "Slope", "R-Value"])
+            for line in output:
+                writer.writerow(line)
+
+    # DivisionStreet 
+    df_divisionStreet = df[df['Location'] == 'DivisionStreet']
+    for i, group in df_divisionStreet.groupby(df_divisionStreet['Time'].dt.date):
+        monitor = 'DivisionStreet'
+        pollutant = 'PM25_Acceptable'
+        
+        # get slope, intercept, and r-value
+        slope, intercept, r, p, stderr = linregress(group['Average_Speed'], group[pollutant])
+        print i, slope, r
+        output.append((i, slope, r))
+        # plot and draw best fit line
+        group.plot(x='Average_Speed', y=pollutant, style = 'o', title=monitor+": "+pollutant+" "+str(i))
+        N=2
+        points = np.linspace(group['Average_Speed'].min(), group[pollutant].max(), N)
+        #plt.plot(points, slope*points + intercept)
+        #plt.savefig('plots/plot'+str(monitor)+str(pollutant)+'_'+str(i)+'.png') 
+
+    with open('divisionStreet_output_final.csv', "wb") as csv_file:
+            writer = csv.writer(csv_file, delimiter=',')
+            writer.writerow(["Date", "Slope", "R-Value"])
             for line in output:
                 writer.writerow(line)
 
