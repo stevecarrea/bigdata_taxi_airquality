@@ -10,19 +10,12 @@ mapreduce/input/*
 mapreduce/input_test/*
 mapreduce/input_big/*
 mapreduce/output/*
-plots/*
 
 __init__.py
 
 part-00000
 
 test.pyc
-
-*.png
-
-*.png
-
-*.png
 
 *.png
 
