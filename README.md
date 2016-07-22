@@ -19,3 +19,11 @@ The team used NYC taxi data as produced by the NYC Taxi and Limousine Commission
 ####  Air Quality Data
 The team decided to use air quality data as produced at hourly intervals by monitors operated by the New York State Department of Environmental Conservation. This monitoring network was established to measure and monitor regional air quality. State air monitors are few and far in between and are not typically located near major roadways since they serve to measure regional air quality as opposed to local air quality. We still began our approach with State data since measurements are readily available on an hourly basis.
 
+### Method:
+
+The timeframe for analysis was 2010 through 2013. During this timeframe, the team calculated the average taxi speed on an hourly basis for those trips that either began or ended within a specified bounding box. An arbitrary initial bounding box was set around each air quality monitor.
+
+#### Hadoop Streaming Program
+
+The program uses data from all NYC taxi trips taken between 2010 through 2013, hourly measurements of pollutants from three air quality monitors in NYC, and hourly weather data from a monitor in Central Park. This data is sent to mappers as explained below. The final output from the reducer consists of aggregated values for average taxi speed and air pollution measurements in order to calculate correlation coefficients between average taxi speed and air pollution on a daily basis. It also consists of relevant weather conditions for each day. This is explained further below.
+
