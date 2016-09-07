@@ -77,11 +77,11 @@ We had to specify MapReduce to run with only one reducer and also that the first
 -D mapreduce.job.reduces=1
 -D stream.num.map.output.key.fields=3
 
-### Challenges
+### Challenges:
 
 The team was unsure what size bounding box to use. If too small, then there may not be enough data points to establish any relationship. If too large, then the area would not correspond to that which may affect a given air monitor. Various sizes were tested to ensure that at least a few trips occurred during each hour.
 
-### Conclusion
+### Conclusion:
 
 Based on the results, weak correlation was found between average taxi speed and any pollutant for each station. After reviewing weather data, it was found that on days with relatively higher R values (greater than 0.5), wind conditions averaged roughly 6 mph, which is relatively low. Therefore, it is possible that the higher correlation is related to the decrease in natural ventilation.
 
